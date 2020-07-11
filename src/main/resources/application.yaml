@@ -1,0 +1,16 @@
+server:
+  port: 20201
+
+spring:
+  application:
+    name: keledbtools
+
+  datasource:
+    username: root
+    password: root123456
+    url: jdbc:mysql://172.23.20.101:5688/devbase?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+
+  thymeleaf:
+#    mode: LEGACYHTML5
+    mode: HTML5
+    cache: false
