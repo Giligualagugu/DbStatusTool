@@ -16,4 +16,9 @@ public class PageForwardController {
         model.addAttribute("name", "我是徐可乐");
         return "hello";
     }
+
+    @GetMapping("/index")
+    public String indexPage() {
+        return "index";
+    }
 }
