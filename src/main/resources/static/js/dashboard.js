@@ -1,4 +1,6 @@
 $(function () {
+
+
     var config = {
         type: 'line',
         data: {
@@ -34,6 +36,11 @@ $(function () {
                     }
                 }],
                 yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 2000,
+                        beginAtZero: true
+                    },
                     display: true,
                     scaleLabel: {
                         display: true,
@@ -83,6 +90,12 @@ $(function () {
                     }
                 }],
                 yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: 10000,
+                        beginAtZero: true
+                    },
+                    stacked: true,
                     display: true,
                     scaleLabel: {
                         display: true,
@@ -96,12 +109,17 @@ $(function () {
     var flowChart = new Chart(ctx2, flowConfig);
 
 
-    //添加数据
-    $("#addData").bind('click', function () {
+    function addData() {
         console.log("查询数据");
 
         // 跟新qps数据
-        axios.get('/chart/qps').then(response => {
+        axios.get('/chart/qps',{
+            params:{
+                time: new Date().getMilliseconds(),
+                // count: config.data.datasets[0].data[0]?config.data.datasets[0].data[0]:0
+                count: 1231
+            }
+        }).then(response => {
             console.log(response.data);
             let dto = response.data;
             config.data.labels.push(dto.time);
@@ -140,7 +158,10 @@ $(function () {
             flowConfig.data.datasets[0].data.shift();
         }
 
-    });
+    }
+    addData();
+
+    setInterval(addData, 6000);
 })
 
 

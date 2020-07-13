@@ -2,9 +2,11 @@ package com.xujiale.tools.controller;
 
 import com.xujiale.tools.dto.DbRateDTO;
 import com.xujiale.tools.service.DbStatusService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -12,6 +14,7 @@ import java.util.Map;
 /**
  * @author xujiale 2020/7/10 17:06
  */
+@Slf4j
 @RestController
 @RequestMapping("/chart")
 public class DemoController {
@@ -31,7 +34,9 @@ public class DemoController {
     }
 
     @GetMapping("/qps")
-    public DbRateDTO selectQps() {
+    public DbRateDTO selectQps(@RequestParam("time") Long time, @RequestParam("count") Long count) {
+        log.info("上次时间戳:{} 上次查询总量:{}", time, count);
+
         return dbStatusService.selectQps();
     }
 

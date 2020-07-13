@@ -50,7 +50,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" style="width: 10%">
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -84,10 +84,17 @@
                     </div>
                 </div>
                 <!--  图表位置  -->
-                <canvas id="myChart" width="600" height="200px"></canvas>
-                <canvas id="flowChart" width="600" height="200px"></canvas>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="col-sm">
+                            <canvas id="flowChart"></canvas>
+                        </div>
+                    </div>
+                </div>
 
-                <button id="addData">加数据</button>
                 <h2>表格标题</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
