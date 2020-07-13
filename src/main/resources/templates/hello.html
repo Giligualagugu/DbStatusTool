@@ -1,11 +1,53 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="zh">
+
 <head>
     <title>hello</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script th:src="@{/js/kele.js}"></script>
+
+    <script th:src="@{/webjars/axios/0.19.2/dist/axios.js}"></script>
+    <script th:src="@{/webjars/chartjs/2.9.3/Chart.js}"></script>
+    <script th:src="@{/webjars/jquery/3.5.1/jquery.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.css}">
 </head>
+
 <body>
-<!--/*@thymesVar id="name" type="java.lang.String"*/-->
-<p th:text="'Hello！, ' + ${name} + '!'">3333</p>
+    <div>
+        <!--/*@thymesVar id="name" type="java.lang.String"*/-->
+        <p th:text="'Hello！, ' + ${name} + '!'">3333</p>
+
+        <button class="btn-primary" onclick="queryBtn()">点击</button>
+
+        <h2>dafeijiao12</h2>
+
+        <div>
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    </div>
+    <script>
+        function queryBtn() {
+            axios.get('http://localhost:20201/chart/sentFlow', {
+                params: {
+                    lastTotalBytes: 21310248
+                }
+            }).then(response => {
+               console.log(response);
+            })
+        }
+
+          var ctx = $("#myChart").get(0).getContext("2d");
+            // This will get the first returned node in the jQuery collection.
+            var myNewChart = new Chart(ctx);
+
+
+
+
+    </script>
 </body>
+
+
 </html>
