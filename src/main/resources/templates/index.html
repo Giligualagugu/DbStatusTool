@@ -36,7 +36,8 @@
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">DBStatus监控</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
-            data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <input class="form-control form-control-dark w-100" type="text" placeholder="搜索" aria-label="Search">
@@ -69,7 +70,7 @@
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Dashboard</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
@@ -83,35 +84,30 @@
                     </div>
                 </div>
                 <!--  图表位置  -->
-                <canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
+                <canvas id="myChart" width="600" height="200px"></canvas>
+                <canvas id="flowChart" width="600" height="200px"></canvas>
 
+                <button id="addData">加数据</button>
                 <h2>表格标题</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
                         <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Header0</th>
-                                <th>Header1</th>
-                                <th>Header2</th>
-                                <th>Header3</th>
-                            </tr>
+                        <tr>
+                            <th>#</th>
+                            <th>Header0</th>
+                            <th>Header1</th>
+                            <th>Header2</th>
+                            <th>Header3</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1,006</td>
-                                <td>nibh</td>
-                                <td>elementum</td>
-                                <td>imperdiet</td>
-                                <td>Duis</td>
-                            </tr>
-                            <tr>
-                                <td>1,007</td>
-                                <td>sagittis</td>
-                                <td>ipsum</td>
-                                <td>Praesent</td>
-                                <td>mauris</td>
-                            </tr>
+                        <tr>
+                            <td>1,006</td>
+                            <td>nibh</td>
+                            <td>elementum</td>
+                            <td>imperdiet</td>
+                            <td>Duis</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -119,48 +115,6 @@
         </div>
     </div>
 
-
-    <script>
-        (function () {
-
-        
-            Chart.defaults.global.responsive = true;
-            var data = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                datasets: [
-                    {
-                        label: "My First dataset",
-                        fillColor: "rgba(220,220,220,0.2)",
-                        strokeColor: "rgba(220,220,220,1)",
-                        pointColor: "rgba(220,220,220,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(220,220,220,1)",
-                        data: [65, 59, 80, 81, 56, 55, 40]
-                    },
-                    {
-                        label: "My Second dataset",
-                        fillColor: "rgba(151,187,205,0.2)",
-                        strokeColor: "rgba(151,187,205,1)",
-                        pointColor: "rgba(151,187,205,1)",
-                        pointStrokeColor: "#fff",
-                        pointHighlightFill: "#fff",
-                        pointHighlightStroke: "rgba(151,187,205,1)",
-                        data: [28, 48, 40, 19, 86, 27, 90]
-                    }
-                ]
-            };
-            var ctx = $("#myChart").get(0).getContext("2d");
-            // This will get the first returned node in the jQuery collection.
-            var myNewChart = new Chart(ctx);
-            myNewChart.Line(data, options);
-        })
-
-
-
-
-
-    </script>
 </body>
 
 </html>

@@ -9,8 +9,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum StatusDictEnum {
-    COM_XA_PREPARE("Com_xa_prepare", "", Long.class, "backup");
-
+    COM_XA_PREPARE("Com_xa_prepare", "", Long.class, "backup"),
+    UP_TIME("Uptime", "", Long.class, "运行时间");
     /**
      * key 值;
      */

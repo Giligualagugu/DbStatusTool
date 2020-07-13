@@ -14,5 +14,5 @@ public class DbStatus implements Serializable {
 
     private String VariableName;
 
-    private Object value;
+    private String value;
 }

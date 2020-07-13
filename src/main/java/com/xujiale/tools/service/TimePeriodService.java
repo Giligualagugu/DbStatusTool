@@ -26,7 +26,7 @@ public class TimePeriodService {
         dbStatusService.cleanCache();
     }
 
-    @Scheduled(cron = "6/10 * * * * *")
+    //    @Scheduled(cron = "6/10 * * * * *")
     public void doTestDB() {
 
         Integer integer = foobarMapper.selectCount(null);

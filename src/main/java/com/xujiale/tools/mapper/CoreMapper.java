@@ -15,4 +15,18 @@ public interface CoreMapper {
     @Select("show global status")
     List<DbStatus> getGlobalStatusInfo();
 
+    @Select("show GLOBAL status where variable_name='uptime'")
+    DbStatus getUpTime();
+
+    @Select("show GLOBAL status where variable_name='questions'")
+    DbStatus getQuestions();
+
+    @Select("show GLOBAL status where variable_name='COM_COMMIT'")
+    DbStatus getCommitCounts();
+
+    @Select("show GLOBAL status where variable_name='COM_ROLLBACK'")
+    DbStatus getCommitRollBackCounts();
+
+    @Select("show GLOBAL status where variable_name='bytes_sent'")
+    DbStatus getSentFlow();
 }
