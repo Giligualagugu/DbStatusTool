@@ -6,10 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -18,7 +16,7 @@ import java.util.Map;
 @Slf4j
 @RestController
 @RequestMapping("/chart")
-public class DemoController {
+public class DbStatusController {
 
     @Autowired
     DbStatusService dbStatusService;
@@ -28,20 +26,13 @@ public class DemoController {
         return dbStatusService.loadStatusInfo();
     }
 
-
     @GetMapping("/sentFlow")
     public DbRateDTO dataSentFlowChart() {
         return dbStatusService.sentFlow();
     }
 
     @GetMapping("/qps")
-    public DbRateDTO selectQps(@RequestParam("time") Long time, @RequestParam("count") Long count, HttpServletRequest httpServletRequest) {
-        log.info("上次时间戳:{} 上次查询总量:{}", time, count);
-
-//        int maxInactiveInterval = httpServletRequest.getSession().getMaxInactiveInterval();
-//
-//        System.out.println(maxInactiveInterval);
-
+    public DbRateDTO selectQps() {
         return dbStatusService.selectQps();
     }
 
