@@ -29,4 +29,7 @@ public interface CoreMapper {
 
     @Select("show GLOBAL status where variable_name='bytes_sent'")
     DbStatus getSentFlow();
+
+    @Select("show GLOBAL status where variable_name='Bytes_received'")
+    DbStatus getBytesReceived();
 }

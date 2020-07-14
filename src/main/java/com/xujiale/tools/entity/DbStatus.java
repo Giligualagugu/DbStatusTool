@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class DbStatus implements Serializable {
 
-    private String VariableName;
+    private String variableName;
 
     private String value;
 }

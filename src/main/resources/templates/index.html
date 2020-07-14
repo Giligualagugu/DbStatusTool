@@ -35,7 +35,7 @@
 
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">DBStatus监控</a>
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#" style="width: 10%">DBStatus监控</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse"
                 data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -51,7 +51,7 @@
 
     <div class="container-fluid">
         <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse" style="width: 10%">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
@@ -69,10 +69,10 @@
                 </div>
             </nav>
 
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <main id="mainarea" role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div
                         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
+                    <h1 class="h2">状态监控</h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
@@ -85,18 +85,22 @@
                     </div>
                 </div>
                 <!--  图表位置  -->
-                <div class="container">
+                <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm">
-                            <canvas id="myChart"></canvas>
-                        </div>
-                        <div class="col-sm">
+                        <div class="col">
                             <canvas id="flowChart"></canvas>
                         </div>
+                        <div class="col">
+                            <canvas id="myChart"></canvas>
+                        </div>
+                        <div class="col">
+                            <canvas id="tpsChart"></canvas>
+                        </div>
+
                     </div>
                 </div>
 
-                <h2>表格标题</h2>
+                <h2>其他状态</h2>
                 <div class="table-responsive">
                     <table class="table table-striped table-sm">
                         <thead>

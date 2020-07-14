@@ -4,12 +4,12 @@ $(function () {
     var config = {
         type: 'line',
         data: {
-            labels: [],
+            labels: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             datasets: [{
-                label: 'qps',
-                backgroundColor: 'rgb(29,119,151)',
-                borderColor: 'rgb(13,109,143)',
-                data: [],
+                dataIndex: 0,
+                label: 'QPS',
+                borderColor: '#31D5A6',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 fill: true,
             }]
         },
@@ -28,17 +28,10 @@ $(function () {
                 intersect: true
             },
             scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time'
-                    }
-                }],
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: 20,
+                        // max: 20,
                         beginAtZero: true
                     },
                     display: true,
@@ -50,28 +43,30 @@ $(function () {
             }
         }
     };
-
     var ctx = $("#myChart").get(0).getContext("2d");
-    // This will get the first returned node in the jQuery collection.
     var myNewChart = new Chart(ctx, config);
 
     var flowConfig = {
         type: 'line',
         data: {
-            labels: [],
+            labels: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             datasets: [{
-                label: 'sentflow',
-                backgroundColor: 'rgb(29,119,151)',
-                borderColor: 'rgb(13,109,143)',
-                data: [],
-                fill: true,
+                dataIndex: 0,
+                label: '发送量',
+                borderColor: '#878FF6',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            }, {
+                dataIndex: 1,
+                label: '接收量',
+                borderColor: '#5cdbd3',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             }]
         },
         options: {
             responsive: true,
             title: {
                 display: true,
-                text: '数据库发送量'
+                text: '数据流量'
             },
             tooltips: {
                 mode: 'index',
@@ -82,20 +77,57 @@ $(function () {
                 intersect: true
             },
             scales: {
-                xAxes: [{
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time'
-                    }
-                }],
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: 1000,
+                        // max: 1000,
                         beginAtZero: true
                     },
-                    stacked: true,
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'bytes/second'
+                    }
+                }]
+            }
+        }
+    };
+    var ctx2 = $("#flowChart").get(0).getContext("2d");
+    var flowChart = new Chart(ctx2, flowConfig);
+
+    var tpsConfig = {
+        type: 'line',
+        data: {
+            labels: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            datasets: [{
+                dataIndex: 0,
+                label: 'TPS',
+                borderColor: '#ff85c0',
+                data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: '数据库TPS'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        // max: 20,
+                        beginAtZero: true
+                    },
                     display: true,
                     scaleLabel: {
                         display: true,
@@ -105,64 +137,92 @@ $(function () {
             }
         }
     };
-    var ctx2 = $("#flowChart").get(0).getContext("2d");
-    var flowChart = new Chart(ctx2, flowConfig);
+    var ctx3 = $("#tpsChart").get(0).getContext("2d");
+    var tpsChart = new Chart(ctx3, tpsConfig);
+
+
+    function updateSentFlow() {
+        return axios.get('/chart/sentFlow');
+    }
+
+    function updateReceivedFlow() {
+        return axios.get('/chart/receivedFlow');
+    }
 
     // 更新图表数据
     function addData() {
         console.log("查询数据");
-
         // 跟新qps数据
-        axios.get('/chart/qps',{
-            params:{
-                time: new Date().getMilliseconds(),
-                // count: config.data.datasets[0].data[0]?config.data.datasets[0].data[0]:0
-                count: 1231
-            }
-        }).then(response => {
-            console.log(response.data);
+        axios.get('/chart/qps').then(response => {
             let dto = response.data;
             config.data.labels.push(dto.time);
             config.data.datasets.forEach(function (dataset) {
-                if (dataset.label === 'qps') {
+                if (dataset.dataIndex === 0) {
                     dataset.data.push(dto.rateCount);
                 }
+                if (config.data.labels.length > 10) {
+                    config.data.labels.shift();
+                }
+                if (config.data.labels.length > 10) {
+                    config.data.datasets[0].data.shift();
+                }
+                myNewChart.update();
             });
         });
 
-        myNewChart.update();
-        if (config.data.labels.length > 10) {
-            config.data.labels.shift();
-        }
-        if (config.data.labels.length > 11) {
-            config.data.datasets[0].data.shift();
-        }
-        //更新sentflow数据
-        axios.get('/chart/sentFlow').then(response => {
-            console.log(response.data);
+
+        //更新sentflow&receivedFlow数据
+        axios.all([updateSentFlow(), updateReceivedFlow()])
+            .then(axios.spread(function (sent, received) {
+                let sentData = sent.data;
+                let receData = received.data;
+                flowConfig.data.labels.push(sentData.time);
+
+                flowConfig.data.datasets.forEach(function (dataset) {
+                    if (dataset.dataIndex === 0) {
+                        dataset.data.push(sentData.rateCount);
+                    }
+                    if (dataset.dataIndex === 1) {
+                        dataset.data.push(receData.rateCount);
+                    }
+                });
+
+
+            })).finally(() => {
+            if (flowConfig.data.labels.length > 10) {
+                flowConfig.data.labels.shift();
+            }
+            if (flowConfig.data.labels.length > 10) {
+                flowConfig.data.datasets[0].data.shift();
+                flowConfig.data.datasets[1].data.shift();
+            }
+            flowChart.update();
+        })
+
+        //更新tps数据
+        axios.get('/chart/tps').then(response => {
             let dto = response.data;
-            flowConfig.data.labels.push(dto.time);
-            flowConfig.data.datasets.forEach(function (dataset) {
-                if (dataset.label === 'sentflow') {
+            tpsConfig.data.labels.push(dto.time);
+            tpsConfig.data.datasets.forEach(function (dataset) {
+                if (dataset.dataIndex === 0) {
                     dataset.data.push(dto.rateCount);
                 }
             });
+
+            if (tpsConfig.data.labels.length > 10) {
+                tpsConfig.data.labels.shift();
+            }
+            if (tpsConfig.data.labels.length > 10) {
+                tpsConfig.data.datasets[0].data.shift();
+            }
+            tpsChart.update();
         });
 
-
-        flowChart.update();
-        if (flowConfig.data.labels.length > 10) {
-            flowConfig.data.labels.shift();
-        }
-        if (flowConfig.data.labels.length > 11) {
-            flowConfig.data.datasets[0].data.shift();
-        }
 
     }
 
-    addData();
-
-    //5秒抓取一次数据
+    // addData();
+    // //5秒抓取一次数据
     setInterval(addData, 5000);
 })
 

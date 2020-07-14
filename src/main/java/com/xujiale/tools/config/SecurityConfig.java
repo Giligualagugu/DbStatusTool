@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/login")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/webjars/**", "/css/**", "/js/**", "/hello")
+                .antMatchers("/webjars/**", "/css/**", "/js/**", "/counter-strike.svg","/hello")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and().csrf().disable()

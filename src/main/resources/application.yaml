@@ -2,11 +2,6 @@ server:
   port: 20201
 
 spring:
-
-  devtools:
-    restart:
-      enabled: true
-      exclude: static/**
   application:
     name: keledbtools
 

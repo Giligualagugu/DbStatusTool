@@ -63,8 +63,19 @@ public class DbStatusService {
         long time = Long.parseLong(coreMapper.getUpTime().getValue());
         long sent = Long.parseLong(coreMapper.getSentFlow().getValue());
         double sentRate = BigDecimal.valueOf(sent).divide(BigDecimal.valueOf(time), 2, RoundingMode.HALF_UP).doubleValue();
-        log.info("发送量 {}:{}", sent, time);
         return new DbRateDTO().setTime(new Date()).setRateCount(sentRate);
+    }
 
+    public List<DbStatus> dbStatuses() {
+
+
+        return null;
+    }
+
+    public DbRateDTO receivedFlow() {
+        long time = Long.parseLong(coreMapper.getUpTime().getValue());
+        long received = Long.parseLong(coreMapper.getBytesReceived().getValue());
+        double receiveRate = BigDecimal.valueOf(received).divide(BigDecimal.valueOf(time), 2, RoundingMode.HALF_UP).doubleValue();
+        return new DbRateDTO().setTime(new Date()).setRateCount(receiveRate);
     }
 }

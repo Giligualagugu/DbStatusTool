@@ -1,6 +1,7 @@
 package com.xujiale.tools.controller;
 
 import com.xujiale.tools.dto.DbRateDTO;
+import com.xujiale.tools.entity.DbStatus;
 import com.xujiale.tools.service.DbStatusService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +33,11 @@ public class DbStatusController {
         return dbStatusService.sentFlow();
     }
 
+    @GetMapping("/receivedFlow")
+    public DbRateDTO receivedFlow() {
+        return dbStatusService.receivedFlow();
+    }
+
     @GetMapping("/qps")
     public DbRateDTO selectQps() {
         return dbStatusService.selectQps();
@@ -40,5 +47,12 @@ public class DbStatusController {
     @GetMapping("/tps")
     public DbRateDTO commitTps() {
         return dbStatusService.commitTps();
+    }
+
+
+    @GetMapping("/status-list")
+    public List<DbStatus> dbStatuses() {
+
+        return dbStatusService.dbStatuses();
     }
 }
