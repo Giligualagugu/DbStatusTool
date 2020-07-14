@@ -108,7 +108,7 @@ $(function () {
     var ctx2 = $("#flowChart").get(0).getContext("2d");
     var flowChart = new Chart(ctx2, flowConfig);
 
-
+    // 更新图表数据
     function addData() {
         console.log("查询数据");
 
@@ -159,9 +159,11 @@ $(function () {
         }
 
     }
+
     addData();
 
-    setInterval(addData, 6000);
+    //5秒抓取一次数据
+    setInterval(addData, 5000);
 })
 
 
