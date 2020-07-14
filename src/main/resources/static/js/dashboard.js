@@ -187,17 +187,15 @@ $(function () {
                     }
                 });
 
-
-            })).finally(() => {
-            if (flowConfig.data.labels.length > 10) {
-                flowConfig.data.labels.shift();
-            }
-            if (flowConfig.data.labels.length > 10) {
-                flowConfig.data.datasets[0].data.shift();
-                flowConfig.data.datasets[1].data.shift();
-            }
-            flowChart.update();
-        })
+                if (flowConfig.data.labels.length > 10) {
+                    flowConfig.data.labels.shift();
+                }
+                if (flowConfig.data.labels.length > 10) {
+                    flowConfig.data.datasets[0].data.shift();
+                    flowConfig.data.datasets[1].data.shift();
+                }
+                flowChart.update();
+            }));
 
         //更新tps数据
         axios.get('/chart/tps').then(response => {
