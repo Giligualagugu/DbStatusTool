@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 
 /**
  * @author xujiale 2020/7/14 10:05
@@ -24,8 +25,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/webjars/**", "/css/**", "/js/**", "/hello")
                 .permitAll()
                 .anyRequest().authenticated()
-                .and().csrf().disable();
-
+                .and().csrf().disable()
+                .rememberMe()
+                .tokenValiditySeconds(3600 * 24).tokenRepository(new InMemoryTokenRepositoryImpl());
     }
 
     @Override

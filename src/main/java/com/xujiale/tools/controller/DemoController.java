@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -34,8 +35,12 @@ public class DemoController {
     }
 
     @GetMapping("/qps")
-    public DbRateDTO selectQps(@RequestParam("time") Long time, @RequestParam("count") Long count) {
+    public DbRateDTO selectQps(@RequestParam("time") Long time, @RequestParam("count") Long count, HttpServletRequest httpServletRequest) {
         log.info("上次时间戳:{} 上次查询总量:{}", time, count);
+
+//        int maxInactiveInterval = httpServletRequest.getSession().getMaxInactiveInterval();
+//
+//        System.out.println(maxInactiveInterval);
 
         return dbStatusService.selectQps();
     }
