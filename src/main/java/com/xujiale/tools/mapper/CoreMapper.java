@@ -15,6 +15,13 @@ public interface CoreMapper {
     @Select("show global status")
     List<DbStatus> getGlobalStatusInfo();
 
+
+    @Select("show global status where variable_name in ('connections','slow_queries','threads_connected','Uptime')")
+    List<DbStatus> getSomeGlobalStatusInfo();
+
+    @Select("show GLOBAL status where variable_name='Connections'")
+    DbStatus getConnections();
+
     @Select("show GLOBAL status where variable_name='uptime'")
     DbStatus getUpTime();
 
@@ -32,4 +39,7 @@ public interface CoreMapper {
 
     @Select("show GLOBAL status where variable_name='Bytes_received'")
     DbStatus getBytesReceived();
+
+
+
 }

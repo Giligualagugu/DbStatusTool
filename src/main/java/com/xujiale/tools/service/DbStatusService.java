@@ -67,9 +67,7 @@ public class DbStatusService {
     }
 
     public List<DbStatus> dbStatuses() {
-
-
-        return null;
+        return coreMapper.getSomeGlobalStatusInfo();
     }
 
     public DbRateDTO receivedFlow() {

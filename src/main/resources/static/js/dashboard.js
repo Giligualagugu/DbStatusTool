@@ -218,12 +218,39 @@ $(function () {
             tpsChart.update();
         });
 
+        updateTableData();
+    }
+
+    addData();
+    // //5秒抓取一次数据
+    setInterval(addData, 5000);
+
+
+    //更新table
+    function updateTableData() {
+
+        axios.get('/chart/status-list').then((response) => {
+            let list = response.data;
+            console.log("加载表格")
+            let table = $('#dbtable');
+            table.empty();
+            table.append('<thead><tr><th>#</th><th>variableName</th><th>value</th></tr></thead>');
+
+            var e = '';
+            for (let i = 0; i < list.length; i++) {
+
+                e += '<tr><td>' + (i + 1) + '</td><td>' + list[i].variableName + '</td><td>' + list[i].value + '</td></tr>';
+
+            }
+            table.append('<tbody>' + e + '</tbody>');
+
+
+        })
+
 
     }
 
-    // addData();
-    // //5秒抓取一次数据
-    setInterval(addData, 5000);
+
 })
 
 
