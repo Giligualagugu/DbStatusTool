@@ -38,7 +38,7 @@ $(function () {
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: 2000,
+                        max: 20,
                         beginAtZero: true
                     },
                     display: true,
@@ -92,7 +92,7 @@ $(function () {
                 yAxes: [{
                     ticks: {
                         min: 0,
-                        max: 10000,
+                        max: 1000,
                         beginAtZero: true
                     },
                     stacked: true,
