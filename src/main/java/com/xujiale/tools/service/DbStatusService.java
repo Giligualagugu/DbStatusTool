@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -29,6 +30,7 @@ public class DbStatusService {
     @Autowired
     CoreMapper coreMapper;
 
+    @Transactional
     @Cacheable(cacheNames = MYSQL_STATUS_57)
     public Map<String, String> loadStatusInfo() {
         log.info("load mysql db status info");
@@ -44,6 +46,7 @@ public class DbStatusService {
     }
 
 
+    @Transactional
     public DbRateDTO selectQps() {
         long time = Long.parseLong(coreMapper.getUpTime().getValue());
         long questions = Long.parseLong(coreMapper.getQuestions().getValue());
@@ -52,6 +55,7 @@ public class DbStatusService {
         return new DbRateDTO().setTime(new Date()).setRateCount(qpsCount);
     }
 
+    @Transactional
     public DbRateDTO commitTps() {
         long time = Long.parseLong(coreMapper.getUpTime().getValue());
         long commits = Long.parseLong(coreMapper.getCommitCounts().getValue()) + Long.parseLong(coreMapper.getCommitRollBackCounts().getValue());
@@ -59,6 +63,7 @@ public class DbStatusService {
         return new DbRateDTO().setTime(new Date()).setRateCount(tps);
     }
 
+    @Transactional
     public DbRateDTO sentFlow() {
         long time = Long.parseLong(coreMapper.getUpTime().getValue());
         long sent = Long.parseLong(coreMapper.getSentFlow().getValue());
@@ -70,6 +75,7 @@ public class DbStatusService {
         return coreMapper.getSomeGlobalStatusInfo();
     }
 
+    @Transactional
     public DbRateDTO receivedFlow() {
         long time = Long.parseLong(coreMapper.getUpTime().getValue());
         long received = Long.parseLong(coreMapper.getBytesReceived().getValue());

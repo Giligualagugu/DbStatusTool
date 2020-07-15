@@ -14,3 +14,7 @@ spring:
   thymeleaf:
 #    mode: LEGACYHTML5
     cache: false
+
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
